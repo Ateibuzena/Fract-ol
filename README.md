@@ -1,6 +1,6 @@
 # Fract-ol
 This project aims to create visually appealing fractals.
-![](URL_DE_LA_IMAGEN)
+![](https://github.com/Ateibuzena/Fract-ol/blob/main/img/Introducction.png)
 
 # Table of Contents
 
@@ -23,7 +23,7 @@ A fractal is a mathematical abstraction, such as a curve or surface, that retain
 
 Several natural phenomena—such as Romanesque architecture—exhibit some of the characteristics of fractals.
 
-![](URL_DE_LA_IMAGEN)
+![](https://github.com/Ateibuzena/Fract-ol/blob/main/img/General_Collage.png)
 
 Now it's your turn to generate some majestic fractals.
 
@@ -35,7 +35,7 @@ It is time for you to create a basic computer graphics project. You will use the
 
 This new project will be your opportunity to familiarize yourself with miniLibX, explore or use the mathematical concept of complex numbers, and take a look at the concept of optimization in CGI, as well as practice event handling.
 
-![](URL_DE_LA_IMAGEN)
+![](https://github.com/Ateibuzena/Fract-ol/blob/main/img/Mandelbrot.png)
 
 ## Chapter III
 
@@ -113,7 +113,7 @@ You can earn some extra points with the following:
 - In addition to zooming, implement movement with arrow keys.
 - Make the color range change.
 
-![](URL_DE_LA_IMAGEN)
+![](https://github.com/Ateibuzena/Fract-ol/blob/main/img/Julia.png)
 
 ## Chapter VI
 
