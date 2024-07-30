@@ -20,13 +20,13 @@ int	ft_color_mandelbrot(int iter, t_data *data)
 	int		color_blue;
 
 	if (iter == MAX_ITER_MANDELBROT)
-		return ((0 << 24) | (0 << 16) | (0 << 8) | 200);
+		return ((0 << 24) | (0 << 16) | (0 << 8) | 225);
 	frequency = 0.3;
 	color_red = (int)(sin(frequency * iter + 0) * 127 + data->red);
 	color_green = (int)(sin(frequency * iter + 4 * M_PI / 3)
 			* 127 + data->green);
 	color_blue = (int)(sin(frequency * iter + 2 * M_PI / 3) * 127 + data->blue);
-	return ((color_red << 24) | (color_green << 16) | (color_blue << 8) | 200);
+	return ((color_red << 24) | (color_green << 16) | (color_blue << 8) | 225);
 }
 
 int	ft_color_julia(int iter, t_data *data)
@@ -37,7 +37,7 @@ int	ft_color_julia(int iter, t_data *data)
 	double	alpha;
 	double	t;
 
-	alpha = 200;
+	alpha = 225;
 	t = ((double)iter / 30);
 	if (iter == MAX_ITER)
 		return ((0 << 24) | (0 << 16) | (0 << 8) | (int)alpha);
