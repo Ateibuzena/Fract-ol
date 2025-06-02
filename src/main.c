@@ -1,59 +1,47 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: azubieta <azubieta@student.42malaga.c      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/17 18:24:00 by azubieta          #+#    #+#             */
-/*   Updated: 2024/07/17 18:24:01 by azubieta         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "../include/fractol.h"
 
-#include "../libfractol.h"
-
-/* Function to give values to my structure */
-void	ft_init(void *param, char **argv)
+void	ft_init(t_fractol *fractol)
 {
-	t_data	*data;
+	// Nombre del fractal (lo puedes dejar vacío si lo asignas luego según el índice)
+	fractol->info.name = "";
 
-	data = (t_data *)param;
-	data->zoom = 1;
-	data->fractal_type = argv[1];
-	data->center_r = (X_MAX + X_MIN) / 2.0;
-	data->center_i = (Y_MAX + Y_MIN) / 2.0;
-	data->cursor_enabled = 0;
-	data->cursor_x = 0;
-	data->cursor_y = 0;
-	data->cursor_moved = 0;
-	data->last_x = -1;
-	data->last_y = -1;
+	// Opciones de color
+	fractol->window.show_help = false;
+
+	// Configuración de vista inicial
+	fractol->view.zoom = 4.0;
+	fractol->view.max_iter = 220;
+	fractol->view.move_x = 0.0;
+	fractol->view.move_y = 0.0;
+
+	// Ajustes específicos según el tipo de fractal
+	if (fractol->info.index == 1) // mandelbrot
+		fractol->view.move_x = -0.5;
+
+	// Si en algún momento vuelves a usar Julia:
+	/*
+	if (fractol->info.index == 2)
+	{
+		fractol->j_nm = 0.0;
+		if (!(fractol->j_args.real || fractol->j_args.imaginary))
+			fractol->j_args = (t_complex){-0.8, 0.156};
+	}
+	*/
 }
 
-/* Font code */
-int	main(int argc, char *argv[])
+int	main(int argc, char **argv)
 {
-	t_data	data;
+	t_fractol	fractol;
 
-	ft_introduction();
-	data.c.real = 0;
-	data.c.imaginary = 0;
-	if (ft_check(argc, argv, &data) == 0)
-	{
-		mlx_set_setting(MLX_MAXIMIZED, true);
-		data.mlx = mlx_init(WIDTH, HEIGHT, "fractol", true);
-		if (!data.mlx)
-			return (EXIT_FAILURE);
-		ft_init(&data, argv);
-		ft_update_image(&data);
-		mlx_set_window_size(data.mlx, WIDTH, HEIGHT);
-		mlx_set_window_limit(data.mlx, 950, 950, 2160, 3120);
-		mlx_key_hook(data.mlx, ft_handle_key, &data);
-		mlx_scroll_hook(data.mlx, ft_handle_scroll, &data);
-		mlx_resize_hook(data.mlx, ft_handle_resize, &data);
-		mlx_cursor_hook(data.mlx, ft_handle_cursor, &data);
-		mlx_loop_hook(data.mlx, ft_check_cursor, &data);
-		mlx_loop(data.mlx);
-	}
-	return (EXIT_SUCCESS);
+	if (argc < 2)
+		ft_instructions();
+	ft_check_args(argc, argv, &fractol);
+	ft_init(&fractol);
+	ft_update_image(&fractol);
+	mlx_loop_hook(fractol.window.mlx, ft_hook, &fractol);
+	mlx_loop(fractol.window.mlx);
+	mlx_delete_image(fractol.window.mlx, fractol.window.image);
+	//mlx_delete_image(fractol.window.mlx, fractol.window.background);
+	mlx_terminate(fractol.window.mlx);
+	return (0);
 }

@@ -1,51 +1,41 @@
-# Variables
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
-
-LIBFT_DIR = /home/azubieta/sgoinfre/azubieta/libft
-LIBFT = $(LIBFT_DIR)/libft.a
-
-MLX42_DIR = /home/azubieta/sgoinfre/azubieta/MLX42
-MLX42 = $(MLX42_DIR)/libmlx42.a
-
-INCLUDES = -I$(LIBFT_DIR) -I$(MLX42_DIR)
-
-SRC_DIR = ./src
-SRCS = $(SRC_DIR)/main.c $(SRC_DIR)/utils.c\
-		$(SRC_DIR)/keyboard_mouse_window.c $(SRC_DIR)/control.c\
-		$(SRC_DIR)/color.c $(SRC_DIR)/mandelbrot.c\
-		$(SRC_DIR)/julia.c\
-
-OBJ_DIR = ./objs
-OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
-
 NAME = fractol
 
-# Reglas
-all: $(NAME)
+CC = cc
 
-$(NAME): $(LIBFT) $(MLX42) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX42) -ldl -lglfw -pthread -lm -o $(NAME)
+LIBFT_DIR = ./libft
+LIBFT = $(LIBFT_DIR)/libft.a
+
+CFLAGS = -Wall -Wextra -Werror -Iinclude -I./MLX42/include -I$(LIBFT_DIR) -g
+LDFLAGS = -L.//MLX42/build -lmlx42 -lglfw -lm -ldl -pthread
+
+SRC_DIR = src
+OBJ_DIR = obj
+
+SRCS = $(wildcard $(SRC_DIR)/**/*.c) $(wildcard $(SRC_DIR)/*.c)
+OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(NAME): $(OBJS) $(LIBFT) ./MLX42/build/libmlx42.a
+	$(CC) $(OBJS) -o $(NAME) $(LDFLAGS) $(LIBFT)
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
-	$(MAKE) -C $(LIBFT_DIR) clean
 
-$(MLX42):
-	$(MAKE) -C $(MLX42_DIR)
-	$(MAKE) -C $(MLX42_DIR) clean
-
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+MLX42/build/libmlx42.a:
+	cmake -S MLX42 -B ./MLX42/build -DMLX42_BUILD_EXAMPLES=OFF
+	cmake --build ./MLX42/build --parallel
 
 clean:
-	rm -rf $(OBJ_DIR)/*.o
+	rm -rf $(OBJ_DIR)
+	$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
-	$(MAKE) -C $(LIBFT_DIR) fclean
-	$(MAKE) -C $(MLX42_DIR) fclean
 	rm -f $(NAME)
+	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+all: $(NAME)
