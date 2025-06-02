@@ -4,7 +4,7 @@
 
 ## 📸 Demo (Video)
 
-[![Watch the demo](https://img.youtube.com/vi/YOUR_VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=YOUR_VIDEO_ID)
+[![Watch the demo]([https://img.youtube.com/vi/YOUR_VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=YOUR_VIDEO_ID](https://github.com/Ateibuzena/Fract-ol/blob/main/Demo_mandelbrot.webm))
 
 ## ⚙️ Features
 - 🧠 Mandelbrot fractal rendering
