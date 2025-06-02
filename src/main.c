@@ -10,7 +10,7 @@ void	ft_init(t_fractol *fractol)
 
 	// Configuración de vista inicial
 	fractol->view.zoom = 4.0;
-	fractol->view.max_iter = 220;
+	fractol->view.max_iter = 120;
 	fractol->view.move_x = 0.0;
 	fractol->view.move_y = 0.0;
 
