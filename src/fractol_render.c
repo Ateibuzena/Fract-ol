@@ -33,6 +33,46 @@ void	ft_update_image(t_fractol *fractol)
 		ft_error(fractol);*/
 }
 
+static void ft_julia_spiral(t_fractol *f)
+{
+	double x, y;
+	double zx, zy, zx2, zy2;
+	double cx = /*-0.4;*/0.285;//-0.8;//-0.70176;//0.355; // Prueba también con 0.355 + 0.355i
+	double cy = /*0.6;*/0.01;//0.156;//-0.3842;//0.355;
+	double theta = 0.1; // ángulo de rotación (ajustable)
+	// Parte de la rotación compleja
+	double	rot_cos = cos(theta);
+	double	rot_sin = sin(theta);
+
+	x = (f->pixel.x - WIDTH / 2.0) * f->view.zoom / WIDTH + f->view.move_x;
+	y = (f->pixel.y - HEIGHT / 2.0) * f->view.zoom / WIDTH + f->view.move_y;
+
+
+
+	zx = x;
+	zy = y;
+
+	int i = 0;
+	while (i < f->view.max_iter)
+	{
+		zx2 = zx * zx - zy * zy + cx;
+		zy2 = 2.0 * zx * zy + cy;
+
+		// rotación compleja: (zx2 + i*zy2) * e^{iθ}
+		double tmp_zx = zx2 * rot_cos - zy2 * rot_sin;
+		double tmp_zy = zx2 * rot_sin + zy2 * rot_cos;
+
+		zx = tmp_zx;
+		zy = tmp_zy;
+
+		if ((zx * zx + zy * zy) > 4.0)
+			break;
+		i++;
+	}
+	f->pixel.i = i;
+	ft_put_pixel(f);
+}
+
 void	ft_mandelbrot(t_fractol *fractol)
 {
 	double	tmp;
@@ -62,7 +102,10 @@ void	ft_render_fractal(t_fractol *fractol)
 		{
 			if (fractol->info.index == 1)
 				ft_mandelbrot(fractol);
-			// if (fractol->info.index == 2)
+			if (fractol->info.index == 2)
+			{
+				ft_julia_spiral(fractol);
+			}
 			// 	ft_julia(fractol);
 
 			fractol->pixel.x++;

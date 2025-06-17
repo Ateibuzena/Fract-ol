@@ -13,6 +13,11 @@ void	ft_init(t_fractol *fractol)
 	fractol->view.max_iter = 120;
 	fractol->view.move_x = 0.0;
 	fractol->view.move_y = 0.0;
+	/*if (fractol->info.index == 2)
+	{
+		fractol->view.max_iter = 2000;
+		fractol->view.zoom = 3.0;        // Zoom más alto para que se vea bien centrado
+	}*/
 
 	// Ajustes específicos según el tipo de fractal
 	if (fractol->info.index == 1) // mandelbrot

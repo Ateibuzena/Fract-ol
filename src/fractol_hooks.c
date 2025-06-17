@@ -22,9 +22,9 @@ static void	ft_update_zoom(t_fractol *fractol, double scroll_y, t_zoom *zoom)
 	zoom->pre_zoom = fractol->view.zoom;
 
 	if (scroll_y > 0)
-		fractol->view.zoom *= 1.1;
+		fractol->view.zoom *= 1.02;
 	else if (scroll_y < 0)
-		fractol->view.zoom /= 1.1;
+		fractol->view.zoom /= 1.02;
 
 	zoom->post_zoom = fractol->view.zoom;
 }
