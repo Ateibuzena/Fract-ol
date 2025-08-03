@@ -41,7 +41,7 @@ void	ft_instructions(void)
 	ft_printf("To run this fractal generation program, you need to execute");
 	ft_printf("it with specific parameters based on the type of fractal");
 	ft_printf(" you want to generate.\nThe parameters include the fractal");
-	ft_printf("type (Mandelbrot, Julia, or Trip) and the RGB color ranges.\n");
+	ft_printf("type (Mandelbrot or Julia) and the RGB color ranges.\n");
 	ft_printf("For the Julia set, you also need to provide the real and ");
 	ft_printf("imaginary parts of the complex number c in the function");
 	ft_printf(" z = z² + c.\n");
@@ -61,7 +61,7 @@ void	ft_introduction(void)
 	ft_printf("the following command:\n");
 	ft_printf("./fractol Julia <Red_Range> <Green_Range> ");
 	ft_printf("<Blue_Range> <Real_C> ");
-	ft_printf("<Imaginary_C>\n\nTrip Fractal\n");
+	ft_printf("<Imaginary_C>\n\n");
 	ft_printf("Notes:\n");
 	ft_printf("- Ensure you provide all the ");
 	ft_printf("parameters for the fractal");
