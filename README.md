@@ -1,6 +1,6 @@
 # Fract-ol
 This project aims to create visually appealing fractals.
-![](https://github.com/Ateibuzena/Fract-ol/blob/main/img/Introducction.png)
+![](https://github.com/Ateibuzena/Fract-ol/blob/main/img/Intro.png)
 
 # Table of Contents
 

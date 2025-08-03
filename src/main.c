@@ -91,6 +91,7 @@ int	main(int argc, char *argv[])
 {
 	t_fractal fractal;
 
+	ft_introduction();
 	ft_memset(&fractal, 0, sizeof(t_fractal));
 	if (!ft_check(argc, argv, &fractal) || !ft_init(&fractal, argv))
 	{
