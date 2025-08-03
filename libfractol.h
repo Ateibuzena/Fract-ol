@@ -14,8 +14,8 @@
 # define LIBFRACTOL_H
 
 /* Libreries */
-# include "/home/azubieta/sgoinfre/azubieta/MLX42/include/MLX42/MLX42.h"
-# include "/home/azubieta/sgoinfre/azubieta/libft/libft.h"
+# include "MLX42/MLX42.h"
+# include "libft/libft.h"
 # include <stdlib.h>
 # include <math.h>
 # include <unistd.h>

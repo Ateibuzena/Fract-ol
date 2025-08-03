@@ -1,50 +1,72 @@
-# Variables
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+NAME = fract-ol
 
-LIBFT_DIR = /home/azubieta/sgoinfre/azubieta/libft
+CC = cc
+
+CFLAGS = -Wall -Wextra -Werror -Iinclude -IMLX42/include -I$(LIBFT_DIR) -g
+LDFLAGS = -LMLX42/build -lmlx42 -lglfw -lm -ldl -pthread
+
+LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
+LIBFT_SRCS := $(shell find $(LIBFT_DIR) -name '*.c' -o -name '*.h')
 
-MLX42_DIR = /home/azubieta/sgoinfre/azubieta/MLX42
-MLX42 = $(MLX42_DIR)/libmlx42.a
+SRC_DIR = src
+OBJ_DIR = obj
 
-INCLUDES = -I$(LIBFT_DIR) -I$(MLX42_DIR)
-
-SRC_DIR = ./src
-SRCS = $(SRC_DIR)/main.c $(SRC_DIR)/utils.c\
-		$(SRC_DIR)/keyboard_mouse_window.c $(SRC_DIR)/control.c\
-		$(SRC_DIR)/color.c $(SRC_DIR)/mandelbrot.c\
-		$(SRC_DIR)/julia.c\
-
-OBJ_DIR = ./objs
+SRCS := $(shell find $(SRC_DIR) -type f -name "*.c")
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-NAME = fractol
+# 🎨 Colors
+RED      = \033[0;31m
+GREEN    = \033[0;32m
+YELLOW   = \033[0;33m
+MAGENTA  = \033[0;35m
+PINK = \033[38;2;255;105;180m
+CYAN     = \033[0;36m
+WHITE    = \033[0;37m
+RESET    = \033[0m
 
-# Reglas
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(MLX42) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX42) -ldl -lglfw -pthread -lm -o $(NAME)
+$(NAME): $(OBJ_DIR) $(OBJS) $(LIBFT) MLX42/build/libmlx42.a
+	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) $(LIBFT) MLX42/build/libmlx42.a -o $(NAME)
+	@echo "$(YELLOW)✅ Build complete: $(NAME)$(RESET)"
 
-$(LIBFT):
-	$(MAKE) -C $(LIBFT_DIR)
-	$(MAKE) -C $(LIBFT_DIR) clean
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
+	@echo "$(YELLOW)✅ Object directories created.$(RESET)"
 
-$(MLX42):
-	$(MAKE) -C $(MLX42_DIR)
-	$(MAKE) -C $(MLX42_DIR) clean
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	@mkdir -p $(dir $@)
+	@echo "$(CYAN)🔹 Compiling$(MAGENTA) $<$(CYAN) ->$(PINK) $@$(RESET)"
+	@$(CC) $(CFLAGS) -c $< -o $@
+	
+$(LIBFT): $(LIBFT_SRCS)
+	@$(MAKE) -C $(LIBFT_DIR)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+MLX42/build/libmlx42.a:
+	@cmake -S MLX42 -B MLX42/build -DMLX42_BUILD_EXAMPLES=OFF
+	@cmake --build MLX42/build --parallel
 
 clean:
-	rm -rf $(OBJ_DIR)/*.o
+	@echo "$(GREEN)🧹 Cleaning libft...$(RESET)"
+	@make -C libft clean
+	@echo "$(GREEN)🧹 Cleaning cub3d...$(RESET)"
+	@echo "$(GREEN)🗑️  Deleting object files...$(RESET)"
+	@$(RM) -rf $(OBJ_DIR)
+	@echo "$(GREEN)🧹 Cleaning MLX42 object files...$(RESET)"
+	@cmake --build MLX42/build --target clean
+	@echo "$(YELLOW)✅ Object cleanup complete.$(RESET)"
 
-fclean: clean
-	$(MAKE) -C $(LIBFT_DIR) fclean
-	$(MAKE) -C $(MLX42_DIR) fclean
-	rm -f $(NAME)
+fclean:
+	@echo "$(GREEN)🧹 Cleaning libft...$(RESET)"
+	@make -C libft fclean
+	@echo "$(GREEN)🧹 Cleaning cub3d...$(RESET)"
+	@echo "$(GREEN)🚮 Deleting file $(NAME)...$(RESET)"
+	@$(RM) -f $(NAME)
+	@$(RM) -rf $(OBJ_DIR)
+	@echo "$(GREEN)🧹 Deleting MLX42 build directory...$(RESET)"
+	@$(RM) -rf MLX42/build
+	@echo "$(YELLOW)✅ Full cleanup complete.$(RESET)"
 
 re: fclean all
 
