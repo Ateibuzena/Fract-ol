@@ -106,9 +106,18 @@ void	ft_render_julia(t_fractal *fractal);
 
 /*color.c*/
 int		ft_psycho_color(int iter, t_fractal *fractal);
+int		ft_tv_color(int iter, t_fractal *fractal);
+int		ft_tv_color_2(int iter, t_fractal *fractal);
 int		ft_soft_color(int iter, t_fractal *fractal);
+int		ft_soft_color_2(int iter, t_fractal *fractal);
+int		ft_soft_color_3(int iter, t_fractal *fractal);
+int		ft_soft_color_4(int iter, t_fractal *fractal);
 
 /*free.c*/
 void	ft_free_fractal(t_fractal *fractal);
 
+/*shapes.c*/
+void	ft_draw_flower(t_fractal *fractal, int x, int y, int w, int h, int size, int *flag, int ft(int , t_fractal *));
+void    ft_draw_circle(t_fractal *fractal, int x, int y, int w, int h, int size, int *flag, int ft(int , t_fractal *));
+void    ft_draw_super_circle(t_fractal *fractal, int x, int y, int w, int h, int size, int *flag, int ft(int , t_fractal *), int ft_2(int , t_fractal *));
 #endif

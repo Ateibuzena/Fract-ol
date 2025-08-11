@@ -78,13 +78,257 @@ void	ft_render_mandelbrot(t_fractal *fractal)
 			fractal->r = start_r + fractal->x * x_step;
 			fractal->i = start_i + fractal->y * y_step;
 			fractal->iter = ft_mandelbrot_iterations(fractal->r, fractal->i, max_iter);
-			fractal->color.combined = ft_psycho_color(fractal->iter, fractal);
-			mlx_put_pixel(fractal->image, fractal->x, fractal->y, fractal->color.combined);
+
+			/*FLOR CENTRAL*/
+			int flag = 0;
+			//ft_draw_super_circle(fractal, fractal->mlx->width * 3 / 6, fractal->mlx->height / 4, 1, 1, 10000, &flag, ft_tv_color, ft_psycho_color);
+			//ft_draw_super_circle(fractal, fractal->mlx->width * 3 / 6, fractal->mlx->height * 3 / 4, 1, 1, 10000, &flag, ft_psycho_color, ft_tv_color);
+			ft_draw_flower(fractal, fractal->mlx->width / 2, fractal->mlx->height / 2, 5, 5, 10000, &flag, ft_psycho_color);
+			/*CIRCULOS EXTERIORES DIAGONAL NEGATIVA*/
+			ft_draw_circle(fractal, fractal->mlx->width / 6, fractal->mlx->height / 4, 1, 1, 10000, &flag, ft_tv_color);
+			ft_draw_circle(fractal, fractal->mlx->width * 5 / 6, fractal->mlx->height * 3 / 4, 1, 1, 10000, &flag, ft_tv_color);
+			ft_draw_circle(fractal, fractal->mlx->width * 5/ 6, fractal->mlx->height / 4, 1, 1, 10000, &flag, ft_psycho_color);
+			ft_draw_circle(fractal, fractal->mlx->width / 6, fractal->mlx->height * 3/ 4, 1, 1, 10000, &flag, ft_psycho_color);
+			if (!flag)
+			{
+				/*else if(sqrt(pow(fractal->y - fractal->mlx->height * 3 / 4, 2) + pow(fractal->x - fractal->mlx->width / 6, 2) < 10000)
+					|| sqrt(pow(fractal->y - fractal->mlx->height / 4, 2) + pow(fractal->x - fractal->mlx->width * 5 / 6, 2) < 10000))
+				{
+					fractal->color.combined = ft_psycho_color(fractal->iter, fractal);
+					mlx_put_pixel(fractal->image, fractal->x, fractal->y, fractal->color.combined);
+					
+				}*/
+				if (fractal->y <= fractal->mlx->height / 2)
+				{	/*(0,0)*/
+					if (fractal->x <= fractal->mlx->width / 3)
+					{
+						fractal->color.combined = ft_psycho_color(fractal->iter, fractal);
+						mlx_put_pixel(fractal->image, fractal->x, fractal->y, fractal->color.combined);
+						
+					}	/*(1,0)*/
+					else if (fractal->x >= fractal->mlx->width / 3 && fractal->x <= fractal->mlx->width * 2 / 3)
+					{	/*DIAGONAL SUPERIOR IZQUIERDA*/
+						if (fractal->y >= 3*fractal->mlx->height * fractal->x / fractal->mlx->width - fractal->mlx->height)
+						{
+							if (fractal->y >= -3*fractal->mlx->height * fractal->x / fractal->mlx->width - fractal->mlx->height)
+							{
+								fractal->color.combined = ft_soft_color(fractal->iter, fractal);
+								mlx_put_pixel(fractal->image, fractal->x, fractal->y, fractal->color.combined);
+								
+							}
+							else
+							{
+								fractal->color.combined = ft_soft_color_3(fractal->iter, fractal);
+								mlx_put_pixel(fractal->image, fractal->x, fractal->y, fractal->color.combined);
+								
+							}
+						}	/*DIAGONAL SUPERIOR DERECHA*/
+						else
+						{
+							if (fractal->y >= (-3)*fractal->mlx->height * fractal->x / fractal->mlx->width - fractal->mlx->height)
+							{
+								fractal->color.combined = ft_soft_color_2(fractal->iter, fractal);
+								mlx_put_pixel(fractal->image, fractal->x, fractal->y, fractal->color.combined);
+								
+							}
+							else
+							{
+								fractal->color.combined = ft_soft_color_4(fractal->iter, fractal);
+								mlx_put_pixel(fractal->image, fractal->x, fractal->y, fractal->color.combined);
+								
+							}
+						}
+					}/*(2,0)*/
+					else
+					{
+						fractal->color.combined = ft_tv_color(fractal->iter, fractal);
+						mlx_put_pixel(fractal->image, fractal->x, fractal->y, fractal->color.combined);
+						
+					}
+				}	/*MITAD ABAJO*/
+				else
+				{	/*(1,0)*/
+					if (fractal->x <= fractal->mlx->width / 3)
+					{
+						fractal->color.combined = ft_tv_color(fractal->iter, fractal);
+						mlx_put_pixel(fractal->image, fractal->x, fractal->y, fractal->color.combined);
+						
+					}	/*(1,1)*/
+					else if (fractal->x >= fractal->mlx->width / 3 && fractal->x <= fractal->mlx->width * 2 / 3)
+					{	/*DIAGONAL INFERIOR IZQUIERDA*/
+						if (fractal->y >= 3*fractal->mlx->height * fractal->x / fractal->mlx->width - fractal->mlx->height)
+						{
+							if (fractal->y >= -3*fractal->mlx->height * fractal->x / fractal->mlx->width - fractal->mlx->height)
+							{
+								fractal->color.combined = ft_soft_color_2(fractal->iter, fractal);
+								mlx_put_pixel(fractal->image, fractal->x, fractal->y, fractal->color.combined);
+								
+							}
+							else
+							{
+								fractal->color.combined = ft_soft_color_4(fractal->iter, fractal);
+								mlx_put_pixel(fractal->image, fractal->x, fractal->y, fractal->color.combined);
+								
+							}
+						}	/*DIAGONAL INFERIOR DERECHA*/
+						else
+						{
+							if (fractal->y >= -3*fractal->mlx->height * fractal->x / fractal->mlx->width - fractal->mlx->height)
+							{
+								fractal->color.combined = ft_soft_color(fractal->iter, fractal);
+								mlx_put_pixel(fractal->image, fractal->x, fractal->y, fractal->color.combined);
+								
+							}
+							else
+							{
+								fractal->color.combined = ft_soft_color_3(fractal->iter, fractal);
+								mlx_put_pixel(fractal->image, fractal->x, fractal->y, fractal->color.combined);
+								
+							}
+						}	
+					}	/*(1,2)*/
+					else
+					{
+						fractal->color.combined = ft_psycho_color(fractal->iter, fractal);
+						mlx_put_pixel(fractal->image, fractal->x, fractal->y, fractal->color.combined);
+						
+					}
+				}
+			}
 			fractal->x++;
 		}
 		fractal->y++;
 	}
 }
+
+/*void	ft_render_mandelbrot_2(t_fractal *fractal)
+{
+	double	x_step;
+	double	y_step;
+	double	start_r;
+	double	start_i;
+	int		max_iter;
+	
+	fractal->y = 0;
+	x_step = (X_MAX - X_MIN) / (fractal->mlx->width * fractal->zoom);
+	y_step = (Y_MAX - Y_MIN) / (fractal->mlx->height * fractal->zoom);
+	start_r = fractal->center.real - (fractal->mlx->width / 2) * x_step;
+	start_i = fractal->center.imaginary - (fractal->mlx->height / 2) * y_step;
+	max_iter = MAX_ITER + log(fractal->zoom + 1) * 15;
+	while (fractal->y < fractal->mlx->height)
+	{
+		fractal->x = 0;
+		while (fractal->x < fractal->mlx->width)
+		{
+			if(sqrt(pow(fractal->mlx->height / 2, 2) + pow(fractal->mlx->width / 2, 2) < 100)
+			{
+
+			}
+			else if (fractal->y <= fractal->mlx->height / 2)
+			{
+				if (fractal->x <= fractal->mlx->width / 3)
+				{
+					if (fractal->y <= fractal->mlx->height / 4)
+					{
+
+					}
+					else
+					{
+
+					}
+				}
+				else if (fractal->x >= fractal->mlx->width / 3 && fractal->x <= fractal->mlx->width * 2 / 3)
+				{
+					if (fractal->y >= 3*fractal->mlx->height * fractal->x / fractal->mlx->width - fractal->mlx->height)
+					{
+						if (fractal->y >= -3*fractal->mlx->height * fractal->x / fractal->mlx->width - fractal->mlx->height)
+						{
+							fractal->color.combined = ft_soft_color_2(fractal->iter, fractal);
+						}
+						else
+						{
+							fractal->color.combined = ft_soft_color_4(fractal->iter, fractal);
+						}
+					}
+					else
+					{
+						if (fractal->y >= -3*fractal->mlx->height * fractal->x / fractal->mlx->width - fractal->mlx->height)
+						{
+							fractal->color.combined = ft_soft_color(fractal->iter, fractal);
+						}
+						else
+						{
+							fractal->color.combined = ft_soft_color_3(fractal->iter, fractal);
+						}
+					}
+				}
+				else
+				{
+					if (fractal->y <= fractal->mlx->width * 3 / 4)
+					{
+
+					}
+					else
+					{
+
+					}
+				}
+			}
+			else
+			{
+				if (fractal->x <= fractal->mlx->width / 3)
+				{
+					if (fractal->y <= fractal->mlx->height * 3 / 4)
+					{
+
+					}
+					else
+					{
+
+					}
+				}
+				else if (fractal->x >= fractal->mlx->width / 3 && fractal->x <= fractal->mlx->width * 2 / 3)
+				{
+					if (fractal->y >= 3*fractal->mlx->height * fractal->x / fractal->mlx->width - fractal->mlx->height)
+					{
+						if (fractal->y >= -3*fractal->mlx->height * fractal->x / fractal->mlx->width - fractal->mlx->height)
+						{
+							fractal->color.combined = ft_soft_color(fractal->iter, fractal);
+						}
+						else
+						{
+							fractal->color.combined = ft_soft_color_3(fractal->iter, fractal);
+						}
+					}
+					else
+					{
+						if (fractal->y >= -3*fractal->mlx->height * fractal->x / fractal->mlx->width - fractal->mlx->height)
+						{
+							fractal->color.combined = ft_soft_color_2(fractal->iter, fractal);
+						}
+						else
+						{
+							fractal->color.combined = ft_soft_color_4(fractal->iter, fractal);
+						}
+					}
+				}
+				else
+				{
+					if (fractal->y <= fractal->mlx->width * 3 / 4)
+					{
+
+					}
+					else
+					{
+
+					}
+				}
+			}
+			
+		}
+		fractal->y++;
+	}
+}*/
 
 /*void	ft_render_mandelbrot(t_fractal *fractal)
 {
@@ -156,7 +400,7 @@ void	ft_render_julia(t_fractal *fractal)
 				* (Y_MAX - Y_MIN) / (fractal->mlx->height * fractal->zoom);
 			fractal->iter = ft_julia_iterations(fractal->r,
 					fractal->i, fractal->complex, fractal->iter);
-			fractal->color.combined = ft_psycho_color(fractal->iter, fractal);
+			fractal->color.combined = ft_soft_color(fractal->iter, fractal);
 			mlx_put_pixel(fractal->image, fractal->x, fractal->y, fractal->color.combined);
 			fractal->x++;
 		}
