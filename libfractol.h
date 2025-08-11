@@ -19,8 +19,8 @@
 # include <math.h>
 # include <unistd.h>
 
-# define HEIGHT 750
-# define WIDTH 1334
+# define HEIGHT 1080
+# define WIDTH 1920
 
 # define M_PI 3.14159265358979323846
 
@@ -106,7 +106,11 @@ void	ft_render_julia(t_fractal *fractal);
 
 /*color.c*/
 int		ft_psycho_color(int iter, t_fractal *fractal);
+int		ft_tv_color(int iter);
 int		ft_soft_color(int iter, t_fractal *fractal);
+int		ft_soft_color_2(int iter, t_fractal *fractal);
+int		ft_soft_color_3(int iter, t_fractal *fractal);
+int		ft_soft_color_4(int iter, t_fractal *fractal);
 
 /*free.c*/
 void	ft_free_fractal(t_fractal *fractal);

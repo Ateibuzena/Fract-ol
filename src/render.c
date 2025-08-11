@@ -75,12 +75,163 @@ void	ft_render_mandelbrot(t_fractal *fractal)
 		fractal->x = 0;
 		while (fractal->x < fractal->mlx->width)
 		{
-			fractal->r = start_r + fractal->x * x_step;
-			fractal->i = start_i + fractal->y * y_step;
-			fractal->iter = ft_mandelbrot_iterations(fractal->r, fractal->i, max_iter);
-			fractal->color.combined = ft_psycho_color(fractal->iter, fractal);
-			mlx_put_pixel(fractal->image, fractal->x, fractal->y, fractal->color.combined);
-			fractal->x++;
+			if (fractal->y <= fractal->mlx->height / 2)
+			{
+				if (fractal->x <= fractal->mlx->width / 3)
+				{
+					fractal->r = start_r + fractal->x * x_step;
+					fractal->i = start_i + fractal->y * y_step;
+					fractal->iter = ft_mandelbrot_iterations(fractal->r, fractal->i, max_iter);
+					fractal->color.combined = ft_psycho_color(fractal->iter, fractal);
+					//fractal->color.combined = ft_soft_color(fractal->iter, fractal);
+					//fractal->color.combined = ft_tv_color(fractal->iter);
+					mlx_put_pixel(fractal->image, fractal->x, fractal->y, fractal->color.combined);
+					fractal->x++;
+				}
+				else if (fractal->x >= fractal->mlx->width / 3 && fractal->x <= fractal->mlx->width * 2 / 3)
+				{
+					if (fractal->y >= 3*fractal->mlx->height * fractal->x / fractal->mlx->width - fractal->mlx->height)
+					{
+						if (fractal->y >= -3*fractal->mlx->height * fractal->x / fractal->mlx->width - fractal->mlx->height)
+						{
+							fractal->r = start_r + fractal->x * x_step;
+							fractal->i = start_i + fractal->y * y_step;
+							fractal->iter = ft_mandelbrot_iterations(fractal->r, fractal->i, max_iter);
+							// fractal->color.combined = ft_psycho_color(fractal->iter, fractal);
+							fractal->color.combined = ft_soft_color(fractal->iter, fractal);
+							//fractal->color.combined = ft_tv_color(fractal->iter);
+							mlx_put_pixel(fractal->image, fractal->x, fractal->y, fractal->color.combined);
+							fractal->x++;
+						}
+						else
+						{
+							fractal->r = start_r + fractal->x * x_step;
+							fractal->i = start_i + fractal->y * y_step;
+							fractal->iter = ft_mandelbrot_iterations(fractal->r, fractal->i, max_iter);
+							// fractal->color.combined = ft_psycho_color(fractal->iter, fractal);
+							fractal->color.combined = ft_soft_color_3(fractal->iter, fractal);
+							//fractal->color.combined = ft_tv_color(fractal->iter);
+							mlx_put_pixel(fractal->image, fractal->x, fractal->y, fractal->color.combined);
+							fractal->x++;
+						}
+					}
+					else
+					{
+						if (fractal->y >= -3*fractal->mlx->height * fractal->x / fractal->mlx->width - fractal->mlx->height)
+						{
+							fractal->r = start_r + fractal->x * x_step;
+							fractal->i = start_i + fractal->y * y_step;
+							fractal->iter = ft_mandelbrot_iterations(fractal->r, fractal->i, max_iter);
+							// fractal->color.combined = ft_psycho_color(fractal->iter, fractal);
+							fractal->color.combined = ft_soft_color_2(fractal->iter, fractal);
+							//fractal->color.combined = ft_tv_color(fractal->iter);
+							mlx_put_pixel(fractal->image, fractal->x, fractal->y, fractal->color.combined);
+							fractal->x++;
+						}
+						else
+						{
+							fractal->r = start_r + fractal->x * x_step;
+							fractal->i = start_i + fractal->y * y_step;
+							fractal->iter = ft_mandelbrot_iterations(fractal->r, fractal->i, max_iter);
+							// fractal->color.combined = ft_psycho_color(fractal->iter, fractal);
+							fractal->color.combined = ft_soft_color_4(fractal->iter, fractal);
+							//fractal->color.combined = ft_tv_color(fractal->iter);
+							mlx_put_pixel(fractal->image, fractal->x, fractal->y, fractal->color.combined);
+							fractal->x++;
+						}
+					}	
+				}
+				else
+				{
+					fractal->r = start_r + fractal->x * x_step;
+					fractal->i = start_i + fractal->y * y_step;
+					fractal->iter = ft_mandelbrot_iterations(fractal->r, fractal->i, max_iter);
+					//fractal->color.combined = ft_psycho_color(fractal->iter, fractal);
+					//fractal->color.combined = ft_soft_color(fractal->iter, fractal);
+					fractal->color.combined = ft_tv_color(fractal->iter);
+					mlx_put_pixel(fractal->image, fractal->x, fractal->y, fractal->color.combined);
+					fractal->x++;
+				}
+			}
+			else
+			{
+				if (fractal->x <= fractal->mlx->width / 3)
+				{
+					fractal->r = start_r + fractal->x * x_step;
+					fractal->i = start_i + fractal->y * y_step;
+					fractal->iter = ft_mandelbrot_iterations(fractal->r, fractal->i, max_iter);
+					//fractal->color.combined = ft_psycho_color(fractal->iter, fractal);
+					//fractal->color.combined = ft_soft_color(fractal->iter, fractal);
+					fractal->color.combined = ft_tv_color(fractal->iter);
+					mlx_put_pixel(fractal->image, fractal->x, fractal->y, fractal->color.combined);
+					fractal->x++;
+				}
+				else if (fractal->x >= fractal->mlx->width / 3 && fractal->x <= fractal->mlx->width * 2 / 3)
+				{
+					if (fractal->y >= 3*fractal->mlx->height * fractal->x / fractal->mlx->width - fractal->mlx->height)
+					{
+						if (fractal->y >= -3*fractal->mlx->height * fractal->x / fractal->mlx->width - fractal->mlx->height)
+						{
+							fractal->r = start_r + fractal->x * x_step;
+							fractal->i = start_i + fractal->y * y_step;
+							fractal->iter = ft_mandelbrot_iterations(fractal->r, fractal->i, max_iter);
+							// fractal->color.combined = ft_psycho_color(fractal->iter, fractal);
+							fractal->color.combined = ft_soft_color_2(fractal->iter, fractal);
+							//fractal->color.combined = ft_tv_color(fractal->iter);
+							mlx_put_pixel(fractal->image, fractal->x, fractal->y, fractal->color.combined);
+							fractal->x++;
+						}
+						else
+						{
+							fractal->r = start_r + fractal->x * x_step;
+							fractal->i = start_i + fractal->y * y_step;
+							fractal->iter = ft_mandelbrot_iterations(fractal->r, fractal->i, max_iter);
+							// fractal->color.combined = ft_psycho_color(fractal->iter, fractal);
+							fractal->color.combined = ft_soft_color_4(fractal->iter, fractal);
+							//fractal->color.combined = ft_tv_color(fractal->iter);
+							mlx_put_pixel(fractal->image, fractal->x, fractal->y, fractal->color.combined);
+							fractal->x++;
+						}
+					}
+					else
+					{
+						if (fractal->y >= -3*fractal->mlx->height * fractal->x / fractal->mlx->width - fractal->mlx->height)
+						{
+							fractal->r = start_r + fractal->x * x_step;
+							fractal->i = start_i + fractal->y * y_step;
+							fractal->iter = ft_mandelbrot_iterations(fractal->r, fractal->i, max_iter);
+							// fractal->color.combined = ft_psycho_color(fractal->iter, fractal);
+							fractal->color.combined = ft_soft_color(fractal->iter, fractal);
+							//fractal->color.combined = ft_tv_color(fractal->iter);
+							mlx_put_pixel(fractal->image, fractal->x, fractal->y, fractal->color.combined);
+							fractal->x++;
+						}
+						else
+						{
+							fractal->r = start_r + fractal->x * x_step;
+							fractal->i = start_i + fractal->y * y_step;
+							fractal->iter = ft_mandelbrot_iterations(fractal->r, fractal->i, max_iter);
+							// fractal->color.combined = ft_psycho_color(fractal->iter, fractal);
+							fractal->color.combined = ft_soft_color_3(fractal->iter, fractal);
+							//fractal->color.combined = ft_tv_color(fractal->iter);
+							mlx_put_pixel(fractal->image, fractal->x, fractal->y, fractal->color.combined);
+							fractal->x++;
+						}
+					}	
+				}
+				else
+				{
+					fractal->r = start_r + fractal->x * x_step;
+					fractal->i = start_i + fractal->y * y_step;
+					fractal->iter = ft_mandelbrot_iterations(fractal->r, fractal->i, max_iter);
+					fractal->color.combined = ft_psycho_color(fractal->iter, fractal);
+					//fractal->color.combined = ft_soft_color(fractal->iter, fractal);
+					//fractal->color.combined = ft_tv_color(fractal->iter);
+					mlx_put_pixel(fractal->image, fractal->x, fractal->y, fractal->color.combined);
+					fractal->x++;
+				}
+			}
+			
 		}
 		fractal->y++;
 	}
@@ -156,7 +307,7 @@ void	ft_render_julia(t_fractal *fractal)
 				* (Y_MAX - Y_MIN) / (fractal->mlx->height * fractal->zoom);
 			fractal->iter = ft_julia_iterations(fractal->r,
 					fractal->i, fractal->complex, fractal->iter);
-			fractal->color.combined = ft_psycho_color(fractal->iter, fractal);
+			fractal->color.combined = ft_soft_color(fractal->iter, fractal);
 			mlx_put_pixel(fractal->image, fractal->x, fractal->y, fractal->color.combined);
 			fractal->x++;
 		}
